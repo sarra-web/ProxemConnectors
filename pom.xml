@@ -37,5 +37,11 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+		<repository>
+			<id>repository-id</id>
+			<url>https://example.com/path/to/your/repository</url>
+		</repository>
+	</distributionManagement>
 
 </project>
