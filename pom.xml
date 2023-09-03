@@ -190,12 +190,7 @@
 						<goals>
 							<goal>process-asciidoc</goal>
 						</goals>
-						<!--MAVEN-->
 
-						<connector>
-							<backend>html</backend>
-							<doctype>book</doctype>
-						</connector>
 					</execution>
 				</executions>
 				<dependencies>
