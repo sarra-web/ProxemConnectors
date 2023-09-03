@@ -1,51 +1,45 @@
 package com.keyrus.proxemconnector.connector.csv.configuration.dto;
 
-import com.keyrus.proxemconnector.connector.csv.configuration.enumerations.FieldType;
-import com.keyrus.proxemconnector.connector.csv.configuration.model.Field;
+import com.keyrus.proxemconnector.connector.csv.configuration.model.Header;
 import io.vavr.control.Either;
 
 import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
 
-
 public record FieldDTO(
         String id,
         String name,
         int position,
-        FieldType fieldType,
         String meta,
-        boolean included,
-        boolean partOfDocumentIdentity
-
-
+        boolean partOfDocumentIdentity,
+        boolean canBeNullOrEmpty
 ) {
     public FieldDTO(
-            final Field field
+            final Header header
     ) {
         this(
-                field.id(),
-                field.name(),
-                field.position()
-                ,field.field_type(),
-                field.meta(),
-                field.isIncluded(),
-                field.partOfDocumentIdentity()
+                header.id(),
+                header.name(),
+                header.position(),
+                header.meta(),
+                header.partOfDocumentIdentity(),
+                header.canBeNullOrEmpty()
         );
     }
 
-    public Either<Collection<Field.Error>, Field> toHeader(
+    public Either<Collection<Header.Error>, Header> toHeader(
             final String referenceConnector
     ) {
         return
-                Field.of(
+                Header.of(
                         FieldDTO.idNonNullOrRandomId(this.id),
                         referenceConnector,
                         this.name,
                         this.position,
                         this.meta,
-                        this.fieldType,
-                        this.partOfDocumentIdentity,this.included
+                        this.partOfDocumentIdentity,
+                        this.canBeNullOrEmpty
                 );
     }
 

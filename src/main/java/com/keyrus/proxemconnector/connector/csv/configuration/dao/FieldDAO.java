@@ -1,16 +1,17 @@
 package com.keyrus.proxemconnector.connector.csv.configuration.dao;
 
 
-import com.keyrus.proxemconnector.connector.csv.configuration.enumerations.FieldType;
-import com.keyrus.proxemconnector.connector.csv.configuration.model.Field;
+import com.keyrus.proxemconnector.connector.csv.configuration.model.Header;
 import io.vavr.control.Either;
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 @Entity
-@Data
 @Table(name = "field")
 public final class FieldDAO implements Serializable {
 
@@ -27,13 +28,8 @@ public final class FieldDAO implements Serializable {
     private String meta;
     @Column(name = "part_of_document_identity", nullable = false, unique = false, insertable = true, updatable = true)
     private boolean partOfDocumentIdentity;
-    @Column(name = "included", nullable = false, unique = false, insertable = true, updatable = true)
-    private boolean included;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "field_type", nullable = false)
-    private FieldType fieldType;
-
+    @Column(name = "can_be_null_or_empty", nullable = false, unique = false, insertable = true, updatable = true)
+    private boolean canBeNullOrEmpty;
 
     public FieldDAO() {
     }
@@ -45,8 +41,7 @@ public final class FieldDAO implements Serializable {
             int position,
             String meta,
             boolean partOfDocumentIdentity,
-            boolean included
-            , FieldType fieldType
+            boolean canBeNullOrEmpty
     ) {
         this.id = id;
         this.referenceConnector = referenceConnector;
@@ -54,22 +49,21 @@ public final class FieldDAO implements Serializable {
         this.position = position;
         this.meta = meta;
         this.partOfDocumentIdentity = partOfDocumentIdentity;
-        this.included = included;
-        this.fieldType = fieldType;
+        this.canBeNullOrEmpty = canBeNullOrEmpty;
     }
 
     public FieldDAO(
-            final Field field
+            final Header header
     ) {
         this(
-                field.id(),
-                field.referenceConnector(),
-                field.name(),
-                field.position(),
-                field.meta(),
-                field.partOfDocumentIdentity(),
-                field.isIncluded()
-                ,field.getFieldType());
+                header.id(),
+                header.referenceConnector(),
+                header.name(),
+                header.position(),
+                header.meta(),
+                header.partOfDocumentIdentity(),
+                header.canBeNullOrEmpty()
+        );
     }
 
     public String getId() {
@@ -96,14 +90,6 @@ public final class FieldDAO implements Serializable {
         this.name = name;
     }
 
-    public FieldType getType() {
-        return fieldType;
-    }
-
-    public void setType(FieldType FieldType) {
-        this.fieldType = FieldType;
-    }
-
     public int getPosition() {
         return position;
     }
@@ -128,24 +114,24 @@ public final class FieldDAO implements Serializable {
         this.partOfDocumentIdentity = partOfDocumentIdentity;
     }
 
-    public boolean isincluded() {
-        return included;
+    public boolean isCanBeNullOrEmpty() {
+        return canBeNullOrEmpty;
     }
 
-    public void included(boolean included) {
-        this.included = included;
+    public void setCanBeNullOrEmpty(boolean canBeNullOrEmpty) {
+        this.canBeNullOrEmpty = canBeNullOrEmpty;
     }
 
-    public final Either<Collection<Field.Error>, Field> toHeader() {
+    public final Either<Collection<Header.Error>, Header> toHeader() {
         return
-                Field.of(
+                Header.of(
                         this.id,
                         this.referenceConnector,
                         this.name,
                         this.position,
                         this.meta,
-                        this.fieldType,
-                        this.partOfDocumentIdentity,this.included
+                        this.partOfDocumentIdentity,
+                        this.canBeNullOrEmpty
                 );
     }
 }

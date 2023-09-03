@@ -1,6 +1,5 @@
 package com.keyrus.proxemconnector.initializer;
 
-import lombok.NoArgsConstructor;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ApplicationListener;
@@ -9,7 +8,6 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
-@NoArgsConstructor
 public class PostgreSQLInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     @Override
@@ -19,9 +17,9 @@ public class PostgreSQLInitializer implements ApplicationContextInitializer<Conf
                         new PostgreSQLContainer<>(
                                 DockerImageName.parse("postgres:15.2-alpine3.17")
                         )
-                                .withDatabaseName("postgres")
-                                .withUsername("postgres")
-                                .withPassword("postgres")
+                                .withDatabaseName("postgresql")
+                                .withUsername("postgresql")
+                                .withPassword("postgresql")
         ) {
             postgreSQLContainer.start();
             while (!postgreSQLContainer.isRunning())
