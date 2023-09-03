@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.keyrus.proxemconnector;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
