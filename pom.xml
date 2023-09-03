@@ -7,7 +7,8 @@
 			<uniqueVersion>false</uniqueVersion>
 			<id>corp1</id>
 			<name>Corporate Repository</name>
-			<url>C:\Users\Dell\Documents</url>
+			<url>file://C:\Users\Dell\Downloads\Rq\demo
+			</url>
 			<layout>default</layout>
 		</repository>
 	</distributionManagement>
