@@ -30,3 +30,12 @@ jobs:
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
+    - name: Build and Push Docker Image
+      uses: docker/login-action@v2
+      with:
+        image: idsarra/proxemconnector
+        registry: docker.io
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+
